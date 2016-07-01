@@ -64,7 +64,6 @@ export PATH=$PATH:$HOME/meteor/
 " >> ~/.bashrc
 '
 
-
 tput setaf 6; echo 'Create and run a "reactJS" example (optional):'
 tput setaf 7; echo "cd $HOME
 

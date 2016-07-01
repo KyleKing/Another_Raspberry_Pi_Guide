@@ -268,10 +268,9 @@ Cherry picked advice from [this guide](https://www.eriwen.com/bash/effective-sho
 1. Edit your .bash_profile or .bashrc by running:
 
     ```bash
-    echo '
+    echo "
     # Modified profile to ignore duplicate history entries on $(date)
-    export HISTCONTROL=ignoredups
-    " >> ~/.bashrc'
+    export HISTCONTROL=ignoredups" >> ~/.bashrc
     ```
 
 2. Create an `inputrc` file, which allows you to auto-complete from history on an arrow key press and a any typed characters:

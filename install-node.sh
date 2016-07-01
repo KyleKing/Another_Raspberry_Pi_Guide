@@ -14,12 +14,12 @@ fi
 
 curDir=$(pwd)
 
-# Increment this to get a newer/older version:
+# Get system info, then install Node:
 nodeInstallV=v6.0.0
-armV=armv6l
+armVersion=$(cat /proc/cpuinfo | egrep -o "\(v[0-9]{2}\)" | egrep -o "v[0-9]{2}")
+armV=arm$armVersion
 tput setaf 6; echo "
-Installing Node $nodeInstallV. Make sure processor matches $armV:"
-cat /proc/cpuinfo | grep "(v"
+Installing Node $nodeInstallV for processor $armV"
 
 tput setaf 7; cd $HOME
 wget https://nodejs.org/dist/$nodeInstallV/node-$nodeInstallV-linux-$armV.tar.gz
