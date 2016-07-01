@@ -11,11 +11,23 @@ if [[ $EUID -ne 0 ]]; then
     "
     exit 1
 fi
+
+curDir=$(pwd)
+
 # Increment this to get a newer/older version:
 nodeInstallV=v6.0.0
+armV=armv6l
 tput setaf 6; echo "
-Installing Node $nodeInstallV:"
-tput setaf 7; echo ""
-wget https://nodejs.org/dist/v6.0.0/node-$nodeInstallV-linux-armv7l.tar.gz
-tar -xvf node-$nodeInstallV-linux-armv7l.tar.gz
-cd node-$nodeInstallV-linux-armv7l
+Installing Node $nodeInstallV. Make sure processor matches $armV:"
+cat /proc/cpuinfo | grep "(v"
+
+tput setaf 7; cd $HOME
+wget https://nodejs.org/dist/$nodeInstallV/node-$nodeInstallV-linux-$armV.tar.gz
+tar -xf node-$nodeInstallV-linux-$armV.tar.gz
+cd node-$nodeInstallV-linux-$armV
+sudo cp -R * /usr/local/
+echo "Done installing Node and NPM, now checking installation:
+When running 'which node', you should see: $(which node)
+When running 'which npm', you should see: $(which npm)
+Installed $(node -v) and $(npm -v)"
+cd $curDir
