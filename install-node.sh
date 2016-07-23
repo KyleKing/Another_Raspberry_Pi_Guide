@@ -1,9 +1,6 @@
-# Node Installation Script for RPI
-# Written By Kyle King
-
 tput setaf 6; echo "
-PhotoFrame Installation Script for RPI
-Only works for Jessie Distribution of Raspbian
+Node Installation Script for RPI Written By Kyle King
+Probably only works for Jessie Distribution of Raspbian
 "
 if [[ $EUID -ne 0 ]]; then
     tput setaf 3; echo "This script needs to be run as root:
@@ -12,11 +9,11 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-curDir=$(pwd)
-
 # Get system info, then install Node:
+# Increment this to get a newer/older version:
 nodeInstallV=v6.0.0
-armVersion=$(cat /proc/cpuinfo | egrep -o "\(v[0-9]{2}\)" | egrep -o "v[0-9]{2}")
+armVersion=$(cat /proc/cpuinfo | egrep -o -m 1 "\(v[0-9]l\)" | egrep -o "v[0-9]l")
+echo "Found armVersion = $armVersion"
 armV=arm$armVersion
 tput setaf 6; echo "
 Installing Node $nodeInstallV for processor $armV"
