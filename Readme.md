@@ -273,14 +273,14 @@ Cherry picked advice from [this guide](https://www.eriwen.com/bash/effective-sho
     export HISTCONTROL=ignoredups" >> ~/.bashrc
     ```
 
-2. Create an `inputrc` file, which allows you to auto-complete from history on an arrow key press and a any typed characters:
+2. Create an `.inputrc` file, which allows you to auto-complete from history on an arrow key press and a any typed characters:
 
     ```bash
     cd ~
-    touch inputrc
+    touch .inputrc
 
     # Then copy and past the below text into the nano editor
-    nano inputrc
+    nano .inputrc
     ```
 
     ```bash
