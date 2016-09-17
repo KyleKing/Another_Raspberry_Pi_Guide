@@ -156,7 +156,7 @@ dir2/
         |__file3.txt
 ```
 
-That's it. Just use `rsync -a ./dirName pi@192.168.2.7:~`. **There is one important note**. If you use `dir/` then you will only transfer the subdirectories and folders. I prefer to use `dir`, which keeps the parent directory.
+That's it. Just use `rsync -a ./dirName pi@192.168.2.7:~`. **There is one important note**. If you use `dir/` then you will only transfer the subdirectories and files. Just `dir` keeps the parent folder.
 
 Additionally, you may want to ignore folders or files: `rsync -a --exclude=ignoredDir/ ./dirName pi@192.168.2.7:~`. Or delete old files: `rsync -a --delete ./dirName pi@192.168.2.7:~`, but be careful and test this with: `rsync -a --delete --dry-run ./dirName pi@192.168.2.7:~`. I most often use the options: `rsync -azP ./dirName pi@192.168.2.7:~`, which shows a progress bar and allows a stopped process to continue.
 
