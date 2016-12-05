@@ -1,0 +1,1 @@
+../bin/install-meteor.sh

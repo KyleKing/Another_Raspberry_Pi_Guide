@@ -1,11 +1,19 @@
 # Electronics
 
+You are viewing the **Electronics** guide and there are tons of other guides to check out:
+
+1. [Configuring the Raspberry Pi (the main README.md)](JavaScript.md)
+2. [JavaScript (Running Meteor/Node)](JavaScript.md)
+3. [Peripherals (Cameras, Wifi, etc.)](Peripherals.md)
+4. [Electronics (Common Circuits, etc.)](Electronics.md)
+5. [BashTools (Common Circuits, etc.)](BashTools.md)
+
 <!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
 
 - [Printable Raspberry Pi Pinout](#printable-raspberry-pi-pinout)
 - [Connecting an LED](#connecting-an-led)
 - [Thermocouple Sensor \(MAX31855\)](#thermocouple-sensor-max31855)
-- [Raspberry Pi PWM](#raspberry-pi-pwm)
+- [Raspberry Pi PWM with Pi-Blaster](#raspberry-pi-pwm-with-pi-blaster)
 - [MOSFETS](#mosfets)
 - [Analog to Digital Converter \(ADC\)](#analog-to-digital-converter-adc)
 
@@ -24,7 +32,7 @@
 
 ## Thermocouple Sensor (MAX31855)
 
-Download the library for the [Adafruit Python MAX31855](https://github.com/adafruit/Adafruit_Python_MAX31855)
+Download the library for the [Adafruit Python MAX31855](https://github.com/adafruit/Adafruit_Python_MAX31855).To use, run the necessary bash scripts and try the sample Python code in [Electronics/Thermocouple.py](Electronics/Thermocouple.py)
 
 ```bash
 cd ~
@@ -34,51 +42,7 @@ cd Adafruit_Python_MAX31855
 sudo python setup.py install
 ```
 
-To use, try this sample Python code:
-
-```python
-# -*- coding: utf-8 -*-
-
-import Adafruit_MAX31855.MAX31855 as MAX31855
-import time
-import sys
-
-# Change the pins to the correct numbers you configured:
-DO__one = 25
-CS__one = 20
-CLK__one = 19
-sensor__one = MAX31855.MAX31855(CLK__one, CS__one, DO__one)
-# Note: Pins that didn't work as CLK pins: 16, 21, 6, 5, 13
-
-
-# Linear calibration
-def calib(raw):
-    calibrated = raw - 5.5
-    return calibrated
-
-
-# Convert Celsius to Fahrenheit
-def c_to_f(celsius):
-    fahrenheit = celsius * 9.0 / 5 + 32
-    return fahrenheit
-
-
-# Loop printing measurements every second.
-while True:
-    temp__one = c_to_f(calib(sensor__one.readTempC()))
-    internal__one = c_to_f(calib(sensor__one.readInternalC()))
-    CSV = '{0:0.3F}, {1:0.3F}'
-    print CSV.format(temp__one, internal__one)
-
-    # Force buffer to close and send data
-    sys.stdout.flush()
-    # Check temperature every second
-    time.sleep(1.0)
-```
-
-## Raspberry Pi PWM
-
-You will want [Pi-Blaster](https://github.com/sarfata/pi-blaster)
+## Raspberry Pi PWM with [Pi-Blaster](https://github.com/sarfata/pi-blaster)
 
 ```bash
 sudo apt-get install autoconf -y
@@ -122,4 +86,4 @@ piblaster.setPwm(23, 0 ); // off
 
 ## Analog to Digital Converter (ADC)
 
-The [Adafruit Guide](https://learn.adafruit.com/reading-a-analog-in-and-controlling-audio-volume-with-the-raspberry-pi?view=all) and my variation of the example code is available at test_ADC.py
+The [Adafruit Guide](https://learn.adafruit.com/reading-a-analog-in-and-controlling-audio-volume-with-the-raspberry-pi?view=all) and my variation of the example code is available at [Electronics/ADC.py](Electronics/ADC.py)
