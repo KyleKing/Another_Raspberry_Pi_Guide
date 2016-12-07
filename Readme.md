@@ -159,7 +159,7 @@ logs/
 
 # to retrieve the files, run this from your computer
 rsync -azP pi@192.168.0.106:~/path/to/logs ./
-``
+```
 
 #### Extra rsync Options
 
