@@ -2,14 +2,17 @@
 
 You are viewing the **Electronics** guide and there are tons of other guides to check out:
 
-1. [Configuring the Raspberry Pi (the main README.md)](JavaScript.md)
-2. [JavaScript (Running Meteor/Node)](JavaScript.md)
-3. [Peripherals (Cameras, Wifi, etc.)](Peripherals.md)
-4. [Electronics (Common Circuits, etc.)](Electronics.md)
-5. [BashTools (Common Circuits, etc.)](BashTools.md)
+1. [Configuring the Raspberry Pi](README.md) - (the main README.md)
+2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
+3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
+4. [Electronics](Electronics.md) - (Common Circuits, etc.)
+5. [BashTools](BashTools.md) - (Common Circuits, etc.)
+
+**Table of Contents**
 
 <!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
 
+- [Sample Electronic Projects](#sample-electronic-projects)
 - [Printable Raspberry Pi Pinout](#printable-raspberry-pi-pinout)
 - [Connecting an LED](#connecting-an-led)
 - [Thermocouple Sensor \(MAX31855\)](#thermocouple-sensor-max31855)
@@ -19,12 +22,17 @@ You are viewing the **Electronics** guide and there are tons of other guides to 
 
 <!-- /MarkdownTOC -->
 
+## Sample Electronic Projects
+
+I have several in-progress Fritzing projects to see in [KyleKing:My-Programming-Sketchbook/Electronics/*](https://github.com/KyleKing/My-Programming-Sketchbook/tree/master/Electronics/)
+
 ## Printable Raspberry Pi Pinout
 
 <p align="center">
-  <img width="200" height=auto src="https://www.splitbrain.org/_media/blog/2015-03/gpio.jpg?w=200&tok=ee4ac3">
+  <img width="300px" height=auto src="https://www.splitbrain.org/_media/blog/2015-03/gpio.jpg?w=200&tok=ee4ac3">
 </p>
-<p align="center">The pin diagram in use, [click here to download the printable version](https://github.com/splitbrain/rpibplusleaf)</p>
+
+The pin diagram in use, [click here to download the printable version](https://github.com/splitbrain/rpibplusleaf)
 
 ## Connecting an LED
 
@@ -80,7 +88,7 @@ piblaster.setPwm(23, 0 ); // off
 [A brief overview of theory](http://blog.oscarliang.net/how-to-use-mosfet-beginner-tutorial/) and a [basic guide with in process images](http://aruljohn.com/blog/raspberrypi-christmas-lights-rgb-led/). *Note*: it may be useful to use a diode on the drain pin of the MOSFET to protect your circuit, however most common diodes only accept up to 1A.
 
 <p align="center">
-  <img width="350" height=auto src="http://aruljohn.com/blog/pix/ChristmasRGBLEDLights_aruljohn.png">
+  <img width="350px" height=auto src="http://aruljohn.com/blog/pix/ChristmasRGBLEDLights_aruljohn.png">
 </p>
 <p align="center">Basic MOSFET circuit diagram</p>
 

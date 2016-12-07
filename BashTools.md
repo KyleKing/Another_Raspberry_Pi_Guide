@@ -2,22 +2,41 @@
 
 You are viewing the **Bash Tools** guide and there are tons of other guides to check out:
 
-1. [Configuring the Raspberry Pi (the main README.md)](JavaScript.md)
-2. [JavaScript (Running Meteor/Node)](JavaScript.md)
-3. [Peripherals (Cameras, Wifi, etc.)](Peripherals.md)
-4. [Electronics (Common Circuits, etc.)](Electronics.md)
-5. [BashTools (Common Circuits, etc.)](BashTools.md)
+1. [Configuring the Raspberry Pi](README.md) - (the main README.md)
+2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
+3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
+4. [Electronics](Electronics.md) - (Common Circuits, etc.)
+5. [BashTools](BashTools.md) - (Common Circuits, etc.)
+
+**Table of Contents**
 
 <!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
 
-- [FIXME/TODO HOW TO EXECUTABLE SYSTEM WIDE](#fixmetodo-how-to-executable-system-wide)
+- [System Wide Executable \(~/bin/*\)](#system-wide-executable-~bin)
+- [Boot On Startup](#boot-on-startup)
 - [Regular Updates](#regular-updates)
 - [Alerting on the End of Long Commands](#alerting-on-the-end-of-long-commands)
 - [Mastering Bash History](#mastering-bash-history)
+- [Useful Commands:](#useful-commands)
 
 <!-- /MarkdownTOC -->
 
-## FIXME/TODO HOW TO EXECUTABLE SYSTEM WIDE
+## System Wide Executable (~/bin/*)
+
+To make a file available everywhere, you need to make it executable `chmod +x  <filename>` and place it in ~/bin/<filename> or another folder part of your path (i.e. append `export PATH=$PATH:$HOME/bin/` to your `~/.bashrc` file)
+
+## Boot On Startup
+
+Edit the rc.local file with `sudo nano /etc/rc.local` [See more about [rc.local on the Raspberry Pi foundation website](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md)]. To start a node application, you could add the snippet:
+
+```bash
+# Based on http://stackoverflow.com/a/31113532/3219667
+export PATH=/sbin:/usr/sbin:$PATH
+cd /home/pi/onoff-shutdown
+su pi -c 'node init.es6' &
+# For long running tasks, the ampersand creates a separate branch
+# Note: 'exit 0' should be the last line of the file
+```
 
 ## Regular Updates
 
@@ -111,3 +130,10 @@ Cherry picked advice from [this guide](https://www.eriwen.com/bash/effective-sho
     "\eOD": backward-char
     "\e[D": backward-char
     ```
+
+## Useful Commands:
+
+- ifconfig - to get wlan0/wifi IP address of raspberry pi
+- lsusb -> Look for USB device
+- lsmod -> Look for kernel: 8192cu
+- iwconfig -> look for wlan0

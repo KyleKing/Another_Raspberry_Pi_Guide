@@ -2,11 +2,13 @@
 
 You are viewing the **JavaScript** guide and there are tons of other guides to check out:
 
-1. [Configuring the Raspberry Pi (the main README.md)](JavaScript.md)
-2. [JavaScript (Running Meteor/Node)](JavaScript.md)
-3. [Peripherals (Cameras, Wifi, etc.)](Peripherals.md)
-4. [Electronics (Common Circuits, etc.)](Electronics.md)
-5. [BashTools (Common Circuits, etc.)](BashTools.md)
+1. [Configuring the Raspberry Pi](README.md) - (the main README.md)
+2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
+3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
+4. [Electronics](Electronics.md) - (Common Circuits, etc.)
+5. [BashTools](BashTools.md) - (Common Circuits, etc.)
+
+**Table of Contents**
 
 <!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
 
@@ -19,7 +21,7 @@ You are viewing the **JavaScript** guide and there are tons of other guides to c
 
 For an easily-packaged script, see [JavaScript/install-node.sh](JavaScript/install-node.sh). This is an abbreviated example:
 
-```
+```bash
 # Increment this to get a newer/older version:
 nodeInstallV=v6.0.0
 echo "Installing Node $nodeInstallV:"

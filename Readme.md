@@ -2,11 +2,13 @@
 
 You are viewing the **Configuring the Raspberry Pi/main** guide and there are tons of other guides to check out:
 
-1. [Configuring the Raspberry Pi (the main README.md)](JavaScript.md)
-2. [JavaScript (Running Meteor/Node)](JavaScript.md)
-3. [Peripherals (Cameras, Wifi, etc.)](Peripherals.md)
-4. [Electronics (Common Circuits, etc.)](Electronics.md)
-5. [BashTools (Common Circuits, etc.)](BashTools.md)
+1. [Configuring the Raspberry Pi](README.md) - (the main README.md)
+2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
+3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
+4. [Electronics](Electronics.md) - (Common Circuits, etc.)
+5. [BashTools](BashTools.md) - (Common Circuits, etc.)
+
+**Table of Contents**
 
 <!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
 
@@ -18,7 +20,7 @@ You are viewing the **Configuring the Raspberry Pi/main** guide and there are to
     - [Man in the Middle Warnings](#man-in-the-middle-warnings)
     - [Accessing the Raspberry Pi GUI](#accessing-the-raspberry-pi-gui)
     - [Headless File Transfer \(rsync\)](#headless-file-transfer-rsync)
-    - [Backup an Entire SD Card](#backup-an-entire-sd-card)
+        - [Moving Files Back from the Raspberry Pi](#moving-files-back-from-the-raspberry-pi)
 
 <!-- /MarkdownTOC -->
 
@@ -68,21 +70,16 @@ You will need nmap, which can be [downloaded here](https://nmap.org/download.htm
 
 Using nmap, find the raspberry pi's IP address ([Source](http://raspberrypi.stackexchange.com/questions/13936/find-raspberry-pi-address-on-local-network/13937#13937)):
 
-<!-- FIXME: -->
 ```bash
-sudo nmap -sP 192.168.(<0, 1, or 2>).* | awk '/^Nmap/{ip=$NF}/B8:27:EB/{print ip}'
-```
-```bash
-nmap -p 22 --open -sV 192.168.2.*
-sudo nmap -sP 192.168.2.* | awk '/^Nmap/{ip=$NF}/B8:27:EB/{print ip}'
-
-# If using a Wifi adapter, there is a slight variation:
-sudo nmap -sP 192.168.1.* | awk '/^Nmap/{ip=$NF}/B8:27:EB/{print ip}'
+# sudo nmap -sP 192.168.(<0, 1, or 2>).*
+sudo nmap -sP 192.168.0.*
 
 # Now connect to the Pi with the address returned by the previous command
-ssh pi@192.168.2.8
+ssh pi@192.168.0.106
 # The initial password is `raspberry`, while the user is `pi`
 ```
+
+(Alternatively, I far and above prefer the free app, [Fling network scanner for iPhone](https://itunes.apple.com/us/app/fing-network-scanner/id430921107?mt=8))
 
 ## Configure the Raspberry Pi
 
@@ -96,23 +93,22 @@ The initial password is `raspberry` for user `pi`. Once logged in you will need 
 
 ## Troubleshooting Headless Connections
 
-These brief notes will help you master working with a headless connection.
+Since everything works perfectly the first time. Skip this section:
 
 ### Man in the Middle Warnings
 
 If having trouble with “man in the middle” warnings, regenerate the SSH key:
 
 ```bash
-ssh-keygen -R # "<enter hostname>”
-# For example:
-ssh-keygen -R 192.168.2.9
+# ssh-keygen -R "<enter hostname>”
+ssh-keygen -R 192.168.0.106
 ```
 
 ### Accessing the Raspberry Pi GUI
 
 *VNC Server (Headless GUI) [Source](http://thejackalofjavascript.com/getting-started-raspberry-pi-node-js/)*
 
-You will be prompted to create an 8 character password. Once set, in Safari (Chrome doesn't appear to work) go to `vnc://192.168.2.8:5901` as if a regular URL (or whichever IP address matches your Pi) and enter the password you set in the popup.
+You will be prompted to create an 8 character password. Once set, in Safari (Chrome doesn't appear to work) go to `vnc://192.168.0.106:5901` as if a regular URL (or whichever IP address matches your Pi) and enter the password you set in the popup.
 
 ```bash
 sudo apt-get install tightvncserver
@@ -124,9 +120,7 @@ vncserver -kill :5901  # When done
 
 ### Headless File Transfer (rsync)
 
-<!-- FIXME: This needs improvements -->
-
-Rsync is a really useful tool. Lets say you have:
+rsync is a really useful tool. Lets say you have:
 
 ```bash
 # on your computer:
@@ -141,7 +135,7 @@ dir2/
 |__file4.txt
 
 # to sync, run this from your computer
-rsync -a dir1 pi@192.168.2.8:dir2/
+rsync -azP dir1 pi@192.168.0.106:dir2/
 
 # Then on the pi:
 dir2/
@@ -153,13 +147,29 @@ dir2/
         |__file3.txt
 ```
 
-That's it. Just use `rsync -a ./dirName pi@192.168.2.7:~`. **There is one important note**. If you use `dir/` then you will only transfer the subdirectories and files. Just `dir` keeps the parent folder.
+That's it. The minimum is to use `rsync -a ./dirName pi@192.168.0.106:~`. **There is one important note**. If you use `dir/` then you will only transfer the subdirectories and files. Just using `dir` keeps the parent folder.
 
-Additionally, you may want to ignore folders or files: `rsync -a --exclude=ignoredDir/ ./dirName pi@192.168.2.7:~`. Or delete old files: `rsync -a --delete ./dirName pi@192.168.2.7:~`, but be careful and test this with: `rsync -a --delete --dry-run ./dirName pi@192.168.2.7:~`. I most often use the options: `rsync -azP ./dirName pi@192.168.2.7:~`, which shows a progress bar and allows a stopped process to continue.
+#### Moving Files Back from the Raspberry Pi
 
-In reverse, to pull a log directory from a remote pi, use `rsync -a pi@192.168.2.7:~/dirname/logs ./`.
+```bash
+# the pi:
+logs/
+|__day1.txt
+|__day2.txt
 
-If you would like to read more about rsync, read the full [Digital Ocean guide](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps). If you would like to edit specific files and don't need to sync an entire directory, there are several options using SCP for Sublime Text among other editors.
+# to retrieve the files, run this from your computer
+rsync -azP pi@192.168.0.106:~/path/to/logs ./
+``
+
+#### Extra rsync Options
+
+Additionally, you may want to:
+
+- ignore folders or files: `rsync -a --exclude=ignoredDir/ ./dirName pi@192.168.0.106:~`
+- or delete old files: `rsync -a --delete ./dirName pi@192.168.0.106:~`, but be careful and test this with: `rsync -a --delete --dry-run ./dirName pi@192.168.0.106:~`
+- or see progress bars and allow stopped processes to resume: `rsync -azP ./dirName pi@192.168.0.106:~`
+
+If you would like to read more about rsync, read the full [Digital Ocean guide](https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps)
 
 ### Backup an Entire SD Card
 
@@ -175,7 +185,7 @@ cd ~/Downloads
 Then use dd, but change the filename to one that makes sense:
 
 ```bash
-sudo dd if=/dev/rdisk2 of=2016-06-23_Backup.img bs=1m
+sudo dd if=/dev/rdisk2 of=<fiename>.img bs=1m
 ```
 
 If you need to delete a .img file, use ```rm``` from the command line, otherwise disk utility seems to think the file space is still in use.
