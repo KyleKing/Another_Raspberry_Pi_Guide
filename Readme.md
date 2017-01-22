@@ -2,11 +2,11 @@
 
 You are viewing the **Configuring the Raspberry Pi/main** guide and there are tons of other guides to check out:
 
-1. [Configuring the Raspberry Pi](README.md) - (the main README.md)
+1. [Configuring the Raspberry Pi](https://github.com/KyleKing/Another_Raspberry_Pi_Guide) - (the main README.md)
 2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
 3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
 4. [Electronics](Electronics.md) - (Common Circuits, etc.)
-5. [BashTools](BashTools.md) - (Common Circuits, etc.)
+5. [BashTools](BashTools.md) - (CLI Commands, PushBullet Integration, etc.)
 
 **Table of Contents**
 
@@ -21,6 +21,8 @@ You are viewing the **Configuring the Raspberry Pi/main** guide and there are to
     - [Accessing the Raspberry Pi GUI](#accessing-the-raspberry-pi-gui)
     - [Headless File Transfer \(rsync\)](#headless-file-transfer-rsync)
         - [Moving Files Back from the Raspberry Pi](#moving-files-back-from-the-raspberry-pi)
+        - [Extra rsync Options](#extra-rsync-options)
+    - [Backup an Entire SD Card](#backup-an-entire-sd-card)
 
 <!-- /MarkdownTOC -->
 
