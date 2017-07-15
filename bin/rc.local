@@ -22,4 +22,7 @@ export PATH=/sbin:/usr/sbin:$PATH
 cd /home/pi/onoff-shutdown
 su pi -c 'npm start' &
 
+# (optional) Forward port 80 to 3000, so the web server can run with normal permissions
+# iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 3000
+
 exit 0

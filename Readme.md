@@ -15,6 +15,8 @@ You are viewing the **Configuring the Raspberry Pi/main** guide and there are to
 - [Starting Fresh](#starting-fresh)
 - [\(Option 1\) Booting a Fresh Installation - Easiest/Keyboard Setup](#option-1-booting-a-fresh-installation---easiestkeyboard-setup)
 - [\(Option 2\) Booting a Fresh Installation - Headless Connection](#option-2-booting-a-fresh-installation---headless-connection)
+    - [Find IP](#find-ip)
+    - [Connect with SSH](#connect-with-ssh)
 - [Configure the Raspberry Pi](#configure-the-raspberry-pi)
 - [Troubleshooting Headless Connections](#troubleshooting-headless-connections)
     - [Man in the Middle Warnings](#man-in-the-middle-warnings)
@@ -31,7 +33,7 @@ You are viewing the **Configuring the Raspberry Pi/main** guide and there are to
 How to cleanly install Raspbian Jessie on an 8gb SD card or larger
 
 1. Download `Raspbian-Jessie` - Get the [latest from the Raspberry Pi foundation](https://www.raspberrypi.org/downloads/raspbian/)
-2. Format a fresh microSD Card - Using a microSD adapter, erase the microSD card to the `MS-DOS (FAT)` format. On a Mac this can be done through the Disk Utility application
+2. Format a fresh microSD Card - Using a microSD adapter, erase the microSD card to the `MS-DOS (FAT)` format and `master boot record`. On a Mac this can be done through the Disk Utility application
 3. Get microSD Card number and eject - On a Mac you can do:
 
     ```bash
@@ -68,20 +70,38 @@ Grab an HDMI display (or HDMI adapter and display), mouse, and keyboard and conn
 * Connect the Raspberry Pi, then power it on
 * Find the IP address and SSH into the pi (see instructions below)
 
-You will need nmap, which can be [downloaded here](https://nmap.org/download.html#macosx). Look for the `Latest release installer: nmap-7.12.dmg` link (alternatively, you can install nmap with Homebrew `brew install nmap`).
+### Find IP
+
+**With nmap:**
+
+[download here](https://nmap.org/download.html#macosx). Look for the `Latest release installer: nmap-7.12.dmg` link (alternatively, you can install nmap with Homebrew `brew install nmap`).
 
 Using nmap, find the raspberry pi's IP address ([Source](http://raspberrypi.stackexchange.com/questions/13936/find-raspberry-pi-address-on-local-network/13937#13937)):
 
 ```bash
 # sudo nmap -sP 192.168.(<0, 1, or 2>).*
 sudo nmap -sP 192.168.0.*
+```
 
-# Now connect to the Pi with the address returned by the previous command
+**With dhcpd_leases:**
+
+[Source](http://interlockroc.org/raspberry-pi-macgyver.html)
+
+```bash
+cat /private/var/db/dhcpd_leases
+```
+
+**Other**
+
+For scanning devices on a network, try [Fling for iPhone](https://itunes.apple.com/us/app/fing-network-scanner/id430921107?mt=8)
+
+### Connect with SSH
+
+```bash
+# Connect to the identified IP address (i.e. <192.168.0.106>)
 ssh pi@192.168.0.106
 # The initial password is `raspberry`, while the user is `pi`
 ```
-
-(Alternatively, I far and above prefer the free app, [Fling network scanner for iPhone](https://itunes.apple.com/us/app/fing-network-scanner/id430921107?mt=8))
 
 ## Configure the Raspberry Pi
 

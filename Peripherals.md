@@ -10,11 +10,11 @@ You are viewing the **Peripherals** guide and there are tons of other guides to 
 
 **Table of Contents**
 
-<!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
+<!-- MarkdownTOC depth="3" autolink="true" bracket="round" -->
 
 - [Wifi](#wifi)
-        - [Ad-Hoc Network](#ad-hoc-network)
-        - [Static IP Address Hack from modmypi:](#static-ip-address-hack-from-modmypi)
+    - [Ad-Hoc Network](#ad-hoc-network)
+    - [Static IP Address Hack from modmypi:](#static-ip-address-hack-from-modmypi)
     - [Special Case: Prevent Sleep of Edimax EW-7811Un Wifi Adapter](#special-case-prevent-sleep-of-edimax-ew-7811un-wifi-adapter)
 - [Serial Communication with an Arduino](#serial-communication-with-an-arduino)
 
@@ -76,7 +76,7 @@ You can't go wrong with supported [usb wifi devices](http://elinux.org/RPi_USB_W
 
 Use [speedtest-cli](https://github.com/sivel/speedtest-cli) for testing connection speed. Make sure that you are providing the Raspberry Pi with a good 2A power supply, since most USB wifi adapters are power hogs and may get clipped and lead to network interruptions otherwise. To troubleshoot use a separate powered USB hub. For the best place to start on wifi troubleshooting, see [this stackexchange answer](http://raspberrypi.stackexchange.com/a/34952/30942).
 
-#### Ad-Hoc Network
+### Ad-Hoc Network
 
 > See tutorial at [http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/](http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/)
 
@@ -90,7 +90,7 @@ sudo cp /etc/network/interfaces-adhoc /etc/network/interfaces
 sudo /etc/init.d/networking restart
 ```
 
-#### Static IP Address Hack from modmypi:
+### Static IP Address Hack from modmypi:
 
 Append the below snippet with `sudo nano /etc/dhcpcd.conf`:
 

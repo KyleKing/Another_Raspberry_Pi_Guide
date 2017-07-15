@@ -133,7 +133,26 @@ Cherry picked advice from [this guide](https://www.eriwen.com/bash/effective-sho
 
 ## Useful Commands:
 
+- raspi-config
 - ifconfig - to get wlan0/wifi IP address of raspberry pi
+- iwconfig
 - lsusb -> Look for USB device
+- lsumodem
 - lsmod -> Look for kernel: 8192cu
 - iwconfig -> look for wlan0
+
+For more commands, see: http://www.circuitbasics.com/useful-raspberry-pi-commands/
+
+<!--
+FIXME: Why did this only work after directly pinging?
+12:20 [~] ¿ nmap -p ssh -sV 192.168.2.9
+
+Starting Nmap 7.12 ( https://nmap.org ) at 2017-04-02 12:20 EDT
+Nmap scan report for 192.168.2.9
+Host is up (0.00031s latency).
+PORT   STATE    SERVICE VERSION
+22/tcp filtered ssh
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 0.77 seconds
+-->
