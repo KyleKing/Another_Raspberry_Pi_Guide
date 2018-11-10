@@ -1,23 +1,23 @@
 # Bash Tools
 
-You are viewing the **Bash Tools** guide and there are tons of other guides to check out:
+You are viewing the **Bash Tools** guide and there are a couple of other guides to check out:
 
 1. [Configuring the Raspberry Pi](https://github.com/KyleKing/Another_Raspberry_Pi_Guide) - (the main README.md)
-2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
-3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
-4. [Electronics](Electronics.md) - (Common Circuits, etc.)
-5. [BashTools](BashTools.md) - (CLI Commands, PushBullet Integration, etc.)
+1. [JavaScript](JavaScript.md) - (NVM and Node)
+1. [Peripherals](Peripherals.md) - (Wi-Fi Cmds, Static IP, Arduino)
+1. [Electronics](Electronics.md) - (Thermocouple, Pi-Blaster, ADC, MOSFETS, etc.)
+1. [BashTools](BashTools.md) - (PushBullet, Scripts, Bash History, Commands Reference)
 
-**Table of Contents**
+## Table of Contents
 
-<!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
+<!-- MarkdownTOC autolink="true" bracket="round" -->
 
-- [System Wide Executable \(~/bin/*\)](#system-wide-executable-~bin)
+- [System Wide Executable \(~/bin/*\)](#system-wide-executable-bin)
 - [Boot On Startup](#boot-on-startup)
 - [Regular Updates](#regular-updates)
 - [Alerting on the End of Long Commands](#alerting-on-the-end-of-long-commands)
 - [Mastering Bash History](#mastering-bash-history)
-- [Useful Commands:](#useful-commands)
+- [Useful Commands](#useful-commands)
 
 <!-- /MarkdownTOC -->
 
@@ -29,7 +29,7 @@ To make a file available everywhere, you need to make it executable `chmod +x  <
 
 Edit the rc.local file with `sudo nano /etc/rc.local` [See more about [rc.local on the Raspberry Pi foundation website](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md)]. To start a node application, you could add the snippet:
 
-```bash
+```sh
 # Based on http://stackoverflow.com/a/31113532/3219667
 export PATH=/sbin:/usr/sbin:$PATH
 cd /home/pi/onoff-shutdown
@@ -42,7 +42,7 @@ su pi -c 'node init.es6' &
 
 You will want to keep the Raspberry Pi up to date. I made a short script that makes this easy. First it checks to make sure that you are using root permission and then runs the regular apt-get commands. The entire file is included in [bin/pullUpdate](bin/pullUpdate), which I like to store in my `~/bin/` as an executable file.
 
-```bash
+```sh
 # RPI Update Script
 # Written By Kyle King
 
@@ -68,10 +68,10 @@ apt-get autoremove && apt-get autoclean
 This [great guide](http://www.pratermade.com/2014/08/use-pushbullet-to-send-notifications-from-your-pi-to-your-phone/) walks through how to use Pushbullet for bash notifications. I summarized and added my own tweaks below:
 
 1. Make a [Pushbullet](https://www.pushbullet.com/) account and install the app wherever you want to get notifications
-2. In Pushbullet, go to `Settings`, `Account`, and then click `Create Access Token`
-3. Create a file: `pushbullet` somewhere on your computer (for now):
+1. In Pushbullet, go to `Settings`, `Account`, and then click `Create Access Token`
+1. Create a file: `pushbullet` somewhere on your computer (for now):
 
-    ```bash
+    ```sh
     #!/bin/bash
 
     API="<Your Access Token Goes Here>"
@@ -87,16 +87,16 @@ This [great guide](http://www.pratermade.com/2014/08/use-pushbullet-to-send-noti
     '
     ```
 
-4. Test the script, try `bash pushbullet 'IT WORKS!'`
-5. If successful, make the script executable from any directory under your user account:
+1. Test the script, try `bash pushbullet 'IT WORKS!'`
+1. If successful, make the script executable from any directory under your user account:
 
-    ```bash
+    ```sh
     cp pushbullet ~/bin/pushbullet
     chmod +x ~/bin/pushbullet # or chmod 755 ~/bin/pushbullet
     # now you can call: pushbullet "message text"
     ```
 
-6. **Making a quick reference snippet**. I use the snippet, `; p ` to generate something like: `; pushbullet "Long Script Finished 11:19 AM"`, so I can write: `sleep 2; pushbullet "Long Script Finished 11:20 AM"`. In [Dash](https://kapeli.com/dash), this snippet looks like: `; pushbullet "Long Script Finished @time"` and could easily be added to any snippet manager you use.
+1. **Making a quick reference snippet**. I use the snippet, `; p` to generate something like: `; pushbullet "Long Script Finished 11:19 AM"`, so I can write: `sleep 2; pushbullet "Long Script Finished 11:20 AM"`. In [Dash](https://kapeli.com/dash), this snippet looks like: `; pushbullet "Long Script Finished @time"` and could easily be added to any snippet manager you use.
 
 ## Mastering Bash History
 
@@ -104,15 +104,15 @@ Cherry picked advice from [this guide](https://www.eriwen.com/bash/effective-sho
 
 1. Edit your .bash_profile or .bashrc by running:
 
-    ```bash
+    ```sh
     echo "
     # Modified profile to ignore duplicate history entries on $(date)
     export HISTCONTROL=ignoredups" >> ~/.bashrc
     ```
 
-2. Create an `.inputrc` file, which allows you to auto-complete from history on an arrow key press and a any typed characters:
+1. Create an `.inputrc` file, which allows you to auto-complete from history on an arrow key press and a any typed characters:
 
-    ```bash
+    ```sh
     cd ~
     touch .inputrc
 
@@ -120,7 +120,7 @@ Cherry picked advice from [this guide](https://www.eriwen.com/bash/effective-sho
     nano .inputrc
     ```
 
-    ```bash
+    ```sh
     "\eOA": history-search-backward
     "\e[A": history-search-backward
     "\eOB": history-search-forward
@@ -131,28 +131,21 @@ Cherry picked advice from [this guide](https://www.eriwen.com/bash/effective-sho
     "\e[D": backward-char
     ```
 
-## Useful Commands:
+## Useful Commands
 
-- raspi-config
-- ifconfig - to get wlan0/wifi IP address of raspberry pi
-- iwconfig
-- lsusb -> Look for USB device
-- lsumodem
-- lsmod -> Look for kernel: 8192cu
-- iwconfig -> look for wlan0
+- `sudo raspi-config`
+- `ifconfig` - to get wlan0/Wi-Fi IP address of raspberry pi
+- `iwconfig` (look for wlan0)
+- `lsusb` -> Look for USB device
+- `lsumodem`
+- `lsmod` -> Look for kernel: 8192cu
+- `chmod`
 
-For more commands, see: http://www.circuitbasics.com/useful-raspberry-pi-commands/
+    ```sh
+    # Set Read/Write Permissions
+    chmod 777 *.sh
+    # Make Executable:
+    chmod u+x *.sh
+    ```
 
-<!--
-FIXME: Why did this only work after directly pinging?
-12:20 [~] ¿ nmap -p ssh -sV 192.168.2.9
-
-Starting Nmap 7.12 ( https://nmap.org ) at 2017-04-02 12:20 EDT
-Nmap scan report for 192.168.2.9
-Host is up (0.00031s latency).
-PORT   STATE    SERVICE VERSION
-22/tcp filtered ssh
-
-Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 0.77 seconds
--->
+For more commands, see [this Circuit Basic Guide](http://www.circuitbasics.com/useful-raspberry-pi-commands/)

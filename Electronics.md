@@ -1,16 +1,16 @@
 # Electronics
 
-You are viewing the **Electronics** guide and there are tons of other guides to check out:
+You are viewing the **Electronics** guide and there are a couple of other guides to check out:
 
 1. [Configuring the Raspberry Pi](https://github.com/KyleKing/Another_Raspberry_Pi_Guide) - (the main README.md)
-2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
-3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
-4. [Electronics](Electronics.md) - (Common Circuits, etc.)
-5. [BashTools](BashTools.md) - (CLI Commands, PushBullet Integration, etc.)
+1. [JavaScript](JavaScript.md) - (NVM and Node)
+1. [Peripherals](Peripherals.md) - (Wi-Fi Cmds, Static IP, Arduino)
+1. [Electronics](Electronics.md) - (Thermocouple, Pi-Blaster, ADC, MOSFETS, etc.)
+1. [BashTools](BashTools.md) - (PushBullet, Scripts, Bash History, Commands Reference)
 
-**Table of Contents**
+## Table of Contents
 
-<!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
+<!-- MarkdownTOC autolink="true" bracket="round" -->
 
 - [Sample Electronic Projects](#sample-electronic-projects)
 - [Printable Raspberry Pi Pinout](#printable-raspberry-pi-pinout)
@@ -32,7 +32,7 @@ I have several in-progress Fritzing projects to see in [KyleKing:My-Programming-
   <img width="300px" height=auto src="https://www.splitbrain.org/_media/blog/2015-03/gpio.jpg?w=200&tok=ee4ac3">
 </p>
 
-The pin diagram in use, [click here to download the printable version](https://github.com/splitbrain/rpibplusleaf)
+[Click here to download the printable version](https://github.com/splitbrain/rpibplusleaf)
 
 ## Connecting an LED
 
@@ -42,7 +42,7 @@ The pin diagram in use, [click here to download the printable version](https://g
 
 Download the library for the [Adafruit Python MAX31855](https://github.com/adafruit/Adafruit_Python_MAX31855).To use, run the necessary bash scripts and try the sample Python code in [Electronics/Thermocouple.py](Electronics/Thermocouple.py)
 
-```bash
+```sh
 cd ~
 sudo apt-get install build-essential python-dev python-smbus -y
 git clone https://github.com/adafruit/Adafruit_Python_MAX31855.git
@@ -52,7 +52,7 @@ sudo python setup.py install
 
 ## Raspberry Pi PWM with [Pi-Blaster](https://github.com/sarfata/pi-blaster)
 
-```bash
+```sh
 sudo apt-get install autoconf -y
 cd ~
 git clone https://github.com/sarfata/pi-blaster.git

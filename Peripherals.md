@@ -1,41 +1,89 @@
 # Peripherals
 
-You are viewing the **Peripherals** guide and there are tons of other guides to check out:
+You are viewing the **Peripherals** guide and there are a couple of other guides to check out:
 
 1. [Configuring the Raspberry Pi](https://github.com/KyleKing/Another_Raspberry_Pi_Guide) - (the main README.md)
-2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
-3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
-4. [Electronics](Electronics.md) - (Common Circuits, etc.)
-5. [BashTools](BashTools.md) - (CLI Commands, PushBullet Integration, etc.)
+1. [JavaScript](JavaScript.md) - (NVM and Node)
+1. [Peripherals](Peripherals.md) - (Wi-Fi Cmds, Static IP, Arduino)
+1. [Electronics](Electronics.md) - (Thermocouple, Pi-Blaster, ADC, MOSFETS, etc.)
+1. [BashTools](BashTools.md) - (PushBullet, Scripts, Bash History, Commands Reference)
 
-**Table of Contents**
+## Table of Contents
 
-<!-- MarkdownTOC depth="3" autolink="true" bracket="round" -->
+<!-- MarkdownTOC autolink="true" bracket="round" -->
 
-- [Wifi](#wifi)
+- [Wi-Fi Shortcut Commands](#wi-fi-shortcut-commands)
+- [Wi-Fi](#wi-fi)
     - [Ad-Hoc Network](#ad-hoc-network)
-    - [Static IP Address Hack from modmypi:](#static-ip-address-hack-from-modmypi)
-    - [Special Case: Prevent Sleep of Edimax EW-7811Un Wifi Adapter](#special-case-prevent-sleep-of-edimax-ew-7811un-wifi-adapter)
+    - [Static IP Address Hack from modmypi](#static-ip-address-hack-from-modmypi)
+    - [Manually Configure Wi-Fi](#Archive)
+    - [Special Case: Prevent Sleep of Edimax EW-7811Un Wi-Fi Adapter](#special-case-prevent-sleep-of-edimax-ew-7811un-wi-fi-adapter)
 - [Serial Communication with an Arduino](#serial-communication-with-an-arduino)
 
 <!-- /MarkdownTOC -->
 
-## Wifi
+## Wi-Fi Shortcut Commands
 
-You can't go wrong with supported [usb wifi devices](http://elinux.org/RPi_USB_Wi-Fi_Adapters) or to just stick to the [Adafruit USB adapter](https://www.adafruit.com/products/2810?gclid=Cj0KEQiA4JnCBRDQ5be3nKCPhpwBEiQAjwN1biElFqVVBO8mTXXVHUVvKY2mfwei4FzAdYpqZzkz9_4aArBg8P8HAQ). There are two files to edit, then insert the USB device and restart.
+- **ifconfig**: Print network connection information
+- **iwconfig**: Check network adapter
+- `iwlist wlan0 scan`: Prints a list of the currently available wireless networks.
+- `iwlist wlan0 scan | grep ESSID`: Use grep along with the name of a field to list only the fields you need (for example to just list the ESSIDs).
+- `nmap`: Scans your network and lists connected devices, port number, protocol, state (open or closed) operating system, MAC addresses, and other information.
+-`ping`: Tests connectivity between two devices connected on a network. For example, ping 10.0.0.32 will send a packet to the device at IP 10.0.0.32 and wait for a response. It also works with website addresses.
+- `wget http://www.website.com/example.txt`: Downloads the file example.txt from the web and saves it to the current directory.
 
-1. Update the credentials. For a typical WPA2 connection (`/etc/wpa_supplicant/wpa_supplicant.conf`). For additional information on static IPs and on non-WPA2 connections, see this [more detailed guide](http://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/). To see information on ad-hoc networks, see [this guide](http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/):
+## Wi-Fi
 
-    ```bash
+Reference guides for configuring Wi-Fi on the Pi
+
+### Ad-Hoc Network
+
+> See tutorial at [http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/](http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/)
+
+```sh
+# To Switch Between setups:
+sudo cp /etc/network/interfaces-Wi-Fi /etc/network/interfaces
+# - or -
+sudo cp /etc/network/interfaces-adhoc /etc/network/interfaces
+
+# Then Restart
+sudo /etc/init.d/networking restart
+```
+
+### Static IP Address Hack from modmypi
+
+Append the below snippet with `sudo nano /etc/dhcpcd.conf`:
+
+```sh
+interface wlan0
+
+# Change this to the desired static IP
+static ip_address=192.168.0.106/24
+
+# Make sure these values are accurate (see guide)
+static routers=192.168.0.1
+static domain_name_servers=192.168.0.1
+```
+
+### Manually Configure Wi-Fi [Archive]
+
+> `raspi-config` now enables basic Wi-Fi configuration, so these manual steps are no longer necessary
+
+Find support [usb Wi-Fi devices here](http://elinux.org/RPi_USB_Wi-Fi_Adapters) or just stick to the [Adafruit USB adapter](https://www.adafruit.com/products/2810?gclid=Cj0KEQiA4JnCBRDQ5be3nKCPhpwBEiQAjwN1biElFqVVBO8mTXXVHUVvKY2mfwei4FzAdYpqZzkz9_4aArBg8P8HAQ).
+
+There are two files to edit, then insert the USB device and restart.
+
+1. Update the credentials. For a typical WPA2 connection (`/etc/wpa_supplicant/wpa_supplicant.conf`). For additional information on static IPs and on non-WPA2 connections, see this [more detailed guide](http://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-Wi-Fi-network/). To see information on ad-hoc networks, see [this guide](http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/):
+
+    ```sh
     # sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
-    # PiSlideshow:
 
     ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
     update_config=1
 
     network={
-            ssid="Apartment_2.4Ghz"
-            psk="suppersnacks"
+            ssid="<SSID>"
+            psk="<PASSWORD>"
             proto=RSN
             key_mgmt=WPA-PSK
             pairwise=CCMP
@@ -43,9 +91,9 @@ You can't go wrong with supported [usb wifi devices](http://elinux.org/RPi_USB_W
     }
     ```
 
-2. The `/etc/network/interface` file should look something like below (though you likely won't have to make any changes):
+1. The `/etc/network/interface` file should look something like below (though you likely won't have to make any changes):
 
-    ```bash
+    ```sh
     # sudo nano /etc/network/interfaces
 
     # interfaces(5) file used by ifup(8) and ifdown(8)
@@ -74,38 +122,9 @@ You can't go wrong with supported [usb wifi devices](http://elinux.org/RPi_USB_W
     iface default inet dhcp
     ```
 
-Use [speedtest-cli](https://github.com/sivel/speedtest-cli) for testing connection speed. Make sure that you are providing the Raspberry Pi with a good 2A power supply, since most USB wifi adapters are power hogs and may get clipped and lead to network interruptions otherwise. To troubleshoot use a separate powered USB hub. For the best place to start on wifi troubleshooting, see [this stackexchange answer](http://raspberrypi.stackexchange.com/a/34952/30942).
+Use [speedtest-cli](https://github.com/sivel/speedtest-cli) for testing connection speed. Make sure that you are providing the Raspberry Pi with a good 2A power supply, since most USB Wi-Fi adapters are power hogs and may get clipped and lead to network interruptions otherwise. To troubleshoot use a separate powered USB hub. For the best place to start on Wi-Fi troubleshooting, see [this stackexchange answer](http://raspberrypi.stackexchange.com/a/34952/30942).
 
-### Ad-Hoc Network
-
-> See tutorial at [http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/](http://slicepi.com/creating-an-ad-hoc-network-for-your-raspberry-pi/)
-
-```bash
-# To Switch Between setups:
-sudo cp /etc/network/interfaces-wifi /etc/network/interfaces
-# - or -
-sudo cp /etc/network/interfaces-adhoc /etc/network/interfaces
-
-# Then Restart
-sudo /etc/init.d/networking restart
-```
-
-### Static IP Address Hack from modmypi:
-
-Append the below snippet with `sudo nano /etc/dhcpcd.conf`:
-
-```bash
-interface wlan0
-
-# Change this to the desired static IP
-static ip_address=192.168.0.106/24
-
-# Make sure these values are accurate (see guide)
-static routers=192.168.0.1
-static domain_name_servers=192.168.0.1
-```
-
-### Special Case: Prevent Sleep of Edimax EW-7811Un Wifi Adapter
+### Special Case: Prevent Sleep of Edimax EW-7811Un Wi-Fi Adapter
 
 Edit:
 
@@ -113,7 +132,7 @@ Edit:
 
 Append:
 
-```bash
+```sh
 # Disable power management
 options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
 ```
@@ -125,4 +144,3 @@ options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
 This is more involved and if you want to see a better guide, check out [Potentiometer](https://github.com/KyleKing/potentiometer) to see how to work with Meteor/Node and an Arduino. To see a more basic example, see [the Team BIKES Stationless BikeShare project](https://github.com/KyleKing/TeamBIKES/tree/master/Coordinator_Raspberry%20Pi)
 
 I haven't tested this, but you should be able to [create aliases to simplify connecting to specific USB devices](http://arduino.stackexchange.com/a/4912). Otherwise the Arduino should have the USB device name with: `/dev/ttyACM<number>`. Run `ls /dev/ttyACM*`. To learn more visit [this Raspberry Pi documentation site](http://raspberry-pi-guide.readthedocs.org/en/latest/system.html)
-

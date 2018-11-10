@@ -1,48 +1,42 @@
 # JavaScript (Node/Meteor) on the Raspberry Pi
 
-You are viewing the **JavaScript** guide and there are tons of other guides to check out:
+You are viewing the **JavaScript** guide and there are a couple of other guides to check out:
 
 1. [Configuring the Raspberry Pi](https://github.com/KyleKing/Another_Raspberry_Pi_Guide) - (the main README.md)
-2. [JavaScript](JavaScript.md) - (Running Meteor/Node)
-3. [Peripherals](Peripherals.md) - (USB Wifi, Serial-Arduino, etc.)
-4. [Electronics](Electronics.md) - (Common Circuits, etc.)
-5. [BashTools](BashTools.md) - (CLI Commands, PushBullet Integration, etc.)
+1. [JavaScript](JavaScript.md) - (NVM and Node)
+1. [Peripherals](Peripherals.md) - (Wi-Fi Cmds, Static IP, Arduino)
+1. [Electronics](Electronics.md) - (Thermocouple, Pi-Blaster, ADC, MOSFETS, etc.)
+1. [BashTools](BashTools.md) - (PushBullet, Scripts, Bash History, Commands Reference)
 
-**Table of Contents**
+## Table of Contents
 
-<!-- MarkdownTOC depth="6" autolink="true" bracket="round" -->
+<!-- MarkdownTOC autolink="true" bracket="round" -->
 
-- [Install and use Node:](#install-and-use-node)
-- [How to install Meteor:](#how-to-install-meteor)
+- [Installing Node with NVM](#installing-node-with-nvm)
+- [Useful NPM and Node Commands](#useful-npm-and-node-commands)
 
 <!-- /MarkdownTOC -->
 
-## Install and use Node:
+## Installing Node with NVM
 
-For an easily-packaged script, see [JavaScript/install-node.sh](JavaScript/install-node.sh). This is an abbreviated example:
+[See official NVM Install Guide](https://github.com/creationix/nvm#installation). Generally follow these steps:
 
-```bash
-# Increment this to get a newer/older version:
-nodeInstallV=v6.0.0
-echo "Installing Node $nodeInstallV:"
-wget https://nodejs.org/dist/v6.0.0/node-$nodeInstallV-linux-armv7l.tar.gz
-tar -xvf node-$nodeInstallV-linux-armv7l.tar.gz
-cd node-$nodeInstallV-linux-armv7l
+```sh
+# See https address from NVM guide
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v<NVM VERSION>/install.sh | bash
+
+# Reload bash profile to circumvent rebooting (https://unix.stackexchange.com/a/30723)
+source ~/.bashrc
+# Check install
+command -v nvm
+
+nvm install node # "node" is an alias for the latest version
 ```
 
 To start playing around with Node right away, try [this easy, on/off demo](https://github.com/fivdi/onoff) and the [associated guide from Adafruit](https://learn.adafruit.com/node-embedded-development?view=all).
 
 ![GIF](https://learn.adafruit.com/system/assets/assets/000/021/906/original/raspberry_pi_demo.gif?1448314329)
 
-## How to install Meteor:
+## Useful NPM and Node Commands
 
-Run the file, `sudo bash install-meteor.sh` and follow the advice printed. The installation is based on the [universal fork of Meteor](https://github.com/4commerce-technologies-AG/meteor).
-
-To make meteor easier to run, add `"export PATH=$PATH:$HOME/meteor/"` to your `.bashrc file`. For example:
-
-```bash
-echo '
-# Modified profile for Meteor Universal Installation on $(date)
-export PATH=$PATH:$HOME/meteor/
-" >> ~/.bashrc'
-```
+- `npm i --only=prod` install only packages from dependencies (i.e. skip dev-dependencies/linting tools)
